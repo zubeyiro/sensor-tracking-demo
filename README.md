@@ -230,13 +230,17 @@ Sensor related endpoint, now only have 1 endpoint for listing
     }
     ```
 
-## Dashboard
+## Dashboard & DB View
 
 There is a simple dashboard as requested, which contains active workouts and allocated sensor counts, you may reach it after running application via;
 
 `http://localhost:8080/live`
 
 It also listens socket to show real-time data.
+
+There is also another endpoint which shows current db information
+
+`/db`
 
 ## Flow
 
