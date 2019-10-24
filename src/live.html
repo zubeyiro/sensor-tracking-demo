@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <title>Express HTML</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <table class="table table-condensed" id="list">
+                <thead>
+                    <tr>
+                        <th>Workout</th>
+                        <th>Allocations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="well well-sm">
+                <ul id="updates">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let key = "cc9d7e0deb20845376cc16e8dd7d79ca80"
+            let url = "http://localhost:8080"
+            let workouts = []
+            let aCount = 0
+
+            $.ajax({
+                url: url + "/workouts",
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    'auth_token': key
+                },
+                contentType: 'application/json; charset=utf-8',
+                success: function (workoutResult) {
+                    if (workoutResult.status) {
+                        workouts = workoutResult.data
+
+                        workouts.forEach(workout => {
+                            $.ajax({
+                                url: url + "/allocations/" + workout.id,
+                                type: 'GET',
+                                dataType: 'json',
+                                headers: {
+                                    'auth_token': key
+                                },
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (allocationResult) {
+                                    if (allocationResult.status) {
+                                        workouts[aCount].allocations = allocationResult.data
+                                        aCount += 1
+                                        if (aCount === workouts.length) {
+                                            workouts.forEach(elem => {
+                                                $('#list > tbody:last-child').append("<tr><td>#" + elem.id + " / " + elem.name + "</td><td id=\"count-" + elem.id + "\">" + elem.allocations.length + "</td></tr>");
+                                            })
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+
+            $(function () {
+                var socket = io.connect(url);
+                socket.on('update', function (msg) {
+                    $("#count-" + msg.workout_id).text(msg.allocation_count)
+                    $('#updates').prepend($('<li>').text("New sensor allocation, table updated"));
+
+                    if ($('#updates').children().length > 10) {
+                        while ($('#updates').children().length > 5) {
+                            $('#updates').children()[$('#updates').children().length - 1].remove()
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

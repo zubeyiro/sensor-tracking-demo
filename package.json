@@ -1,0 +1,32 @@
+{
+  "name": "beat81-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha --timeout 10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zubeyiro/beat81-task.git"
+  },
+  "author": "Zubeyir OZTURK - zubeyrozturk@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zubeyiro/beat81-task/issues"
+  },
+  "homepage": "https://github.com/zubeyiro/beat81-task#readme",
+  "dependencies": {
+    "@hapi/joi": "^16.1.7",
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cryptr": "^4.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-joi-validation": "^4.0.1",
+    "mocha": "^6.2.2",
+    "socket.io": "^2.3.0"
+  }
+}
