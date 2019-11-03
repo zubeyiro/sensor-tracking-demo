@@ -2,12 +2,11 @@
 
 ## Overview
 
-I did not use database, I have just created static JSON format which has been attached to runtime global object when application launches. Data files located under;
+There is no database, there is just static JSON format which has been attached to runtime global object when application launches. Data files located under;
 
 `/src/data`
 
-I also made a dummy authentication system and made all endpoints authentication required.
-I have also put a simple Dockerfile, in case you want to deploy it locally
+There is also dummy authentication system and made all endpoints authentication required.
 
 ## Install & Test & Run
 
@@ -241,16 +240,3 @@ It also listens socket to show real-time data.
 There is also another endpoint which shows current db information
 
 `/db`
-
-## Flow
-
-Workflow is as below;
-
-- Login and get token
-- List available workouts and available sensors
-- Make allocation to workout with selected sensor
-- Join the workout (Participant information are being generated after joining a workout, before that, its just an allocation)
-- In any case, sensor needs to be changed, make another allocation during workout. Current sensor information will be changed but old sensor information will be kept.
-
-## Questions
-If I could not make clear to understand the structure, please do not hesitate to contact me; zubeyrozturk@gmail.com
